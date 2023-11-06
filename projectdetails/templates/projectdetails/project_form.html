@@ -1,0 +1,22 @@
+{% extends 'base_project.html' %}
+
+{% load crispy_forms_tags %}
+
+
+
+{% block content %}
+<form method="post" novalidate>
+{% csrf_token %}
+<div class="row">
+<div class="col-6">
+{{ form.project_title|as_crispy_field }}
+</div>
+<div class="col-6">
+{{ form.email|as_crispy_field }}
+</div>
+</div>
+{{ form.tools|as_crispy_field }}
+{{ form.abstract|as_crispy_field }}
+<button type="submit" class="btn btn-success">Save project</button>
+</form>
+{% endblock %}

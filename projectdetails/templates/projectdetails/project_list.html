@@ -1,0 +1,31 @@
+{% extends 'base_project.html' %}
+
+{% block content %}
+<p>
+<a href="{% url 'project_add' %}" class="btn btn-primary">Add project</a>
+</p>
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Job Title</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+{% for proj in project %}
+<tr>
+<td><a href="{% url 'project_edit' proj.uuid %}">{{ proj.project_title }} {{proj.id}}</a></td>
+<td>{{ proj.email }}</td>
+<td>{{ proj.tools}}  </td> 
+<td> <form action="{% url 'project_delete' proj.uuid %} " method="post"  onsubmit="return confirm('Do you really want to submit the form?');">  {% csrf_token %}<input type="submit" value="Delete" ></td> 
+</tr>
+{% empty %}
+<tr class="table-active">
+<td colspan="3">No data</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %} 
