@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<p>
+<a href="{% url 'seminar_add' %}" class="btn btn-primary">Add Seminar</a>
+</p>
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>Sl No</th>
+<th>Title</th>
+<th>URL</th>
+<th>Remove</th>
+<th>Status</th>
+<th>Remarks</th>
+</tr>
+</thead>
+<tbody>
+{% for sem in seminar %}
+<tr>
+<td><a href="{% url 'seminar_edit' sem.uuid %}">{{ sem.project_title }} {{sem.id}}</a></td>
+<td>{{ sem.seminar_title }}</td>
+<td>{{ sem.paper_link}}  </td> 
+<td> <form action="{% url 'seminar_delete' sem.uuid %} " method="post"  onsubmit="return confirm('Are you sure to delete the paper?');">  {% csrf_token %}<input type="submit" value="Delete" ></td>
+{% if sem.status == 0 %} 
+<td>Rejected</td>
+{% elif sem.status == 1 %}
+<td>Submitted</td>
+{% else %}
+<td>Approved</td>
+{% endif %}
+<td>{{ sem.remarks }}</td>
+</tr>
+{% empty %}
+<tr class="table-active">
+<td colspan="3">No data</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %} 
